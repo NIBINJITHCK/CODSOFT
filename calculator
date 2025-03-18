@@ -1,0 +1,44 @@
+def on_click(button_text):
+    if button_text == "=":
+        try:
+            result = eval(entry_var.get())
+            entry_var.set(result)
+        except Exception:
+            messagebox.showerror("Error", "Invalid Expression")
+    elif button_text == "C":
+        entry_var.set("")
+    else:
+        entry_var.set(entry_var.get() + button_text)
+
+def clear_entry():
+    entry_var.set("")
+
+
+root = tk.Tk()
+root.title("MY CALCULATOR")
+root.configure(bg="lightgray")
+
+entry_var = tk.StringVar()
+entry = tk.Entry(root, textvariable=entry_var, font=("Times New Roman", 25), justify='right', bd=10, bg="light grey")
+entry.grid(row=0, column=0, columnspan=4, ipadx=8, ipady=8)
+
+buttons = [
+    ('7', '8', '9', '/'),
+    ('4', '5', '6', '*'),
+    ('1', '2', '3', '-'),
+    ('C', '0', '.', '='),
+    ('+',)
+]
+
+for i, row in enumerate(buttons):
+    for j, button_text in enumerate(row):
+        button = tk.Button(root, text=button_text, font=("Times New Roman", 25), padx=20, pady=20,
+                           bg="light green", fg="black", command=lambda b=button_text: on_click(b))
+        button.grid(row=i+1, column=j, sticky='nsew')
+
+
+clear_button = tk.Button(root, text="Clear", font=("Times New Roman", 25), padx=20, pady=20,
+                         bg="red", fg="white", command=clear_entry)
+clear_button.grid(row=6, column=0, columnspan=4, sticky='nsew')  # Spans across all columns
+
+root.mainloop()
